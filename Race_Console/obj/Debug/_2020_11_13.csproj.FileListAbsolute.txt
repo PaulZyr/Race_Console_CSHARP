@@ -1,0 +1,7 @@
+D:\paul_zyr_docs\vs2019repos\01_SHARP_STEP\STEP_HOMEWORK\_2020_11_13\bin\Debug\_2020_11_13.exe.config
+D:\paul_zyr_docs\vs2019repos\01_SHARP_STEP\STEP_HOMEWORK\_2020_11_13\bin\Debug\_2020_11_13.exe
+D:\paul_zyr_docs\vs2019repos\01_SHARP_STEP\STEP_HOMEWORK\_2020_11_13\bin\Debug\_2020_11_13.pdb
+D:\paul_zyr_docs\vs2019repos\01_SHARP_STEP\STEP_HOMEWORK\_2020_11_13\obj\Debug\_2020_11_13.csprojAssemblyReference.cache
+D:\paul_zyr_docs\vs2019repos\01_SHARP_STEP\STEP_HOMEWORK\_2020_11_13\obj\Debug\_2020_11_13.csproj.CoreCompileInputs.cache
+D:\paul_zyr_docs\vs2019repos\01_SHARP_STEP\STEP_HOMEWORK\_2020_11_13\obj\Debug\_2020_11_13.exe
+D:\paul_zyr_docs\vs2019repos\01_SHARP_STEP\STEP_HOMEWORK\_2020_11_13\obj\Debug\_2020_11_13.pdb
