@@ -165,5 +165,12 @@ namespace _2020_11_13
             CursorLeft = left;
             WriteLine(" %%%%%     %%    %%%%%%          %%%%%     %%    %%%%%% ");
         }
+        public static void PrintExceptionInfo(string str)
+        {
+            ForegroundColor = ConsoleColor.White;
+            CursorTop = 35;
+            CursorLeft = 0;
+            Write($"Exception: {str}");
+        }
     }
 }

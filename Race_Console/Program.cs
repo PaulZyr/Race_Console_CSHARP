@@ -34,8 +34,12 @@ namespace _2020_11_13
                     play.Play(0);
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                if (ex.Message != "exit")
+                {
+                    PrintGame.PrintExceptionInfo(ex.Message);
+                }
             }
             Clear();
             PrintGame.Bye();

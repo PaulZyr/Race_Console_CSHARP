@@ -48,32 +48,35 @@ namespace _2020_11_13
             int k = _random.Next(10, MaxSpeed / 2);
             Position += k;
             BonusPenalty(k);
-            
+
             PrintCar();
         }
         void BonusPenalty(int k)
         {
-            if (k > 80)
+            if (k > 92)
             {
                 Position -= k;
+            }
+            else if (k < 13)
+            {
+                Position += 30;
             }
             else if (k % 77 == 0)
             {
                 Position += k * 2;
             }
+            else if (k % 55 == 0)
+            {
+                Position += k + k / 2;
+            }
             else if (k % 33 == 0)
             {
-                Position += k;
-            }
-            else if (k % 11 == 0)
-            {
-                Position -= k / 2;
+                Position += k / 3;
             }
             else if (k % 7 == 0)
             {
-                Position -= k / 4;
+                Position -= k;
             }
-
         }
         public void ClearPrintedCar()
         {

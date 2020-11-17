@@ -10,8 +10,8 @@ namespace _2020_11_13
     class PlayGame
     {
         List<Car> cars;
-        public int MinRandomSpeed { get; set; }
-        public int MaxRandomSpeed { get; set; }
+        public int MinForRandomCarSpeed { get; set; }
+        public int MaxForRandomCarSpeed { get; set; }
         
         public event Action prepareCarEvent;
         public event Action driveCarEvent;
@@ -20,8 +20,8 @@ namespace _2020_11_13
         public PlayGame()
         {
             cars = new List<Car>();
-            MinRandomSpeed = 140;
-            MaxRandomSpeed = 200;
+            MinForRandomCarSpeed = 140;
+            MaxForRandomCarSpeed = 200;
         }
         public void AddCar(Car car)
         {
@@ -29,22 +29,41 @@ namespace _2020_11_13
         }
         public void Play(int n)
         {
-            if (n == 0)
-            { 
-                BeforeStart(); 
-            }
-
-            prepareCarEvent.Invoke();
-
-            PrintGame.CountDown();
-
-            while (true)
+            try
             {
-                driveCarEvent.Invoke();
-                PrintGame.PrintGameInfo(cars);
-                CheckFinish();
+                if (n == 0)
+                {
+                    BeforeStart();
+                }
 
-                System.Threading.Thread.Sleep(40);
+                OnPrepareCarEvent();
+
+                PrintGame.CountDown();
+
+                while (true)
+                {
+                    OnDriveCarEvent();
+
+                    PrintGame.PrintGameInfo(cars);
+
+                    if (CheckFinish())
+                    {
+                        OnFinishEvent();
+                    }
+
+                    System.Threading.Thread.Sleep(40);
+                }
+            }
+            catch(Exception ex)
+            {
+                if (ex.Message != "exit")
+                {
+                    PrintGame.PrintExceptionInfo(ex.Message);
+                }
+                else
+                {
+                    throw new Exception("exit");
+                }
             }
         }
         void PlayAgain()
@@ -54,7 +73,8 @@ namespace _2020_11_13
                 foreach(var item in cars)
                 {
                     item.Position = 1200;
-                    item.MaxSpeed = Car._random.Next(MinRandomSpeed, MaxRandomSpeed);
+                    item.MaxSpeed = Car._random.Next
+                        (MinForRandomCarSpeed, MaxForRandomCarSpeed);
                 }
                 PrintGame.PrintBoard(cars);
                 Play(1);
@@ -84,22 +104,57 @@ namespace _2020_11_13
             SetWindowSize(150, 40);
             foreach(var item in cars)
             {
-                item.MaxSpeed = Car._random.Next(MinRandomSpeed, MaxRandomSpeed);
+                item.MaxSpeed = Car._random.Next
+                    (MinForRandomCarSpeed, MaxForRandomCarSpeed);
                 prepareCarEvent += new Action(item.Prepare);
                 driveCarEvent += new Action(item.Drive);
             }
             finishEvent += GameOver;
             PrintGame.PrintBoard(cars);
         }
-        void CheckFinish()
+        void OnPrepareCarEvent()
+        {
+            if (prepareCarEvent != null)
+            {
+                prepareCarEvent.Invoke();
+            }
+            else
+            {
+                throw new Exception("prepareCarEvent is empty");
+            }
+        }
+        void OnDriveCarEvent()
+        {
+            if (driveCarEvent != null)
+            {
+                driveCarEvent.Invoke();
+            }
+            else
+            {
+                throw new Exception("driveCarEvent is empty");
+            }
+        }
+        void OnFinishEvent()
+        {
+            if (finishEvent != null)
+            {
+                finishEvent.Invoke();
+            }
+            else
+            {
+                throw new Exception("finishEvent is empty");
+            }
+        }
+        bool CheckFinish()
         {
             foreach (var item in cars)
             {
                 if ((item.Position / 100 - 12) >= 100)
                 {
-                    finishEvent.Invoke();
+                    return true;
                 }
             }
+            return false;
         }
         public void GameOver()
         {
@@ -125,7 +180,9 @@ namespace _2020_11_13
             WriteLine("--- GAME OVER ---");
             CursorTop = 9;
             CursorLeft = 40;
-            WriteLine($"Winner: {winner.DriverName}");
+            Write("Winner:  ");
+            ForegroundColor = winner.Color;
+            Write($"{winner.DriverName}");
 
             PlayAgain();
         }
